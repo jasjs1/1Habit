@@ -21,7 +21,7 @@ struct Why1Habit: View {
                 .font(.title3)
                 .padding(.bottom, 15)
             
-            Text("Start a new carrer.")
+            Text("Carrer change.")
                 .font(.title3)
                 .padding(.bottom, 15)
             
