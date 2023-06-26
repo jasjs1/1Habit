@@ -68,13 +68,13 @@ struct BottomSheetView: View {
             Text("Select the days you want to practice the habit")
                 .font(.callout)
             
-            Toggle("Monday", isOn: bindingForDay("Mo"))
-            Toggle("Tuesday", isOn: bindingForDay("Tu"))
-            Toggle("Wednesday", isOn: bindingForDay("We"))
-            Toggle("Thursday", isOn: bindingForDay("Th"))
-            Toggle("Friday", isOn: bindingForDay("Fr"))
-            Toggle("Saturday", isOn: bindingForDay("Sa"))
-            Toggle("Sunday", isOn: bindingForDay("Su"))
+            Toggle("Monday", isOn: bindingForDay("Mon"))
+            Toggle("Tuesday", isOn: bindingForDay("Tue"))
+            Toggle("Wednesday", isOn: bindingForDay("Wen"))
+            Toggle("Thursday", isOn: bindingForDay("Thu"))
+            Toggle("Friday", isOn: bindingForDay("Fri"))
+            Toggle("Saturday", isOn: bindingForDay("Sat"))
+            Toggle("Sunday", isOn: bindingForDay("Sun"))
             
             DatePicker("Reminder time:", selection: $newHabitReminderTime, in: ...Date())
         }
