@@ -1,45 +1,29 @@
 import SwiftUI
 
-struct Habit: Identifiable {
+struct Habit: Identifiable, Codable {
     var id = UUID()
     var name: String
 }
 
 struct ContentView: View {
     @State private var habits: [Habit] = []
-    @State private var isAddingHabit = false
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(habits) { habit in
-                    Text(habit.name)
-                }
-                .onDelete(perform: deleteHabit)
-            }
-            .navigationBarTitle("1Habit")
-            .navigationBarItems(trailing: addButton)
-            .sheet(isPresented: $isAddingHabit) {
-                createHabitView()
-            }
+        List(habits) { habit in
+            Text(habit.name)
+        }
+        .onAppear {
+            retrieveHabitsFromStorage()
         }
     }
     
-    private func deleteHabit(at offsets: IndexSet) {
-        habits.remove(atOffsets: offsets)
-    }
-    
-    private var addButton: some View {
-        Button(action: {
-            isAddingHabit = true
-        }) {
-            Spacer()
-           
+    func retrieveHabitsFromStorage() {
+        if let data = UserDefaults.standard.data(forKey: "SavedHabits") {
+            let decoder = JSONDecoder()
+            if let decodedHabits = try? decoder.decode([Habit].self, from: data) {
+                habits = decodedHabits
+            }
         }
-    }
-    
-    private func createHabitView() -> some View {
-        Text("Create Habit View")
     }
 }
 
