@@ -47,7 +47,6 @@ struct ContentView: View {
                     Spacer()
                 }
             }
-            .navigationBarTitle("1Habit")
             .onAppear {
                 retrieveHabitsFromStorage()
             }
