@@ -30,6 +30,7 @@ struct ContentView: View {
                     
                     Text("Remaining days of the month: \(remainingDays) days")
                         .font(.headline)
+                        .bold()
                         .padding()
                     
                     Spacer()
