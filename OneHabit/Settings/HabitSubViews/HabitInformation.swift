@@ -1,5 +1,10 @@
 import SwiftUI
 
+//struct Habit: Identifiable, Codable {
+//    var id = UUID()
+//    var name: String
+//    var selectedDays: [String]
+//}
 
 struct HabitInformation: View {
     @State private var habits: [Habit] = []
@@ -20,7 +25,7 @@ struct HabitInformation: View {
                         }
                         Spacer()
                         Button(action: {
-                            reset()
+                            deleteHabit(habit)
                         }) {
                             VStack {
                                 Image(systemName: "trash")
@@ -58,10 +63,23 @@ struct HabitInformation: View {
         }
     }
     
+    private func deleteHabit(_ habit: Habit) {
+        struct Habit: Identifiable, Codable {
+            var id = UUID()
+            var name: String
+            var selectedDays: [String]
     
-    private func reset() -> Habit {
-        return Habit(name: "", selectedDays: [])
+        }
+
+
+        if let index = habits.firstIndex(where: { $0.id == habit.id }) {
+            habits[index].selectedDays = [] // Resetting selected days
+            habits[index].name = ""
+//            habits[index].streak = 0 // Resetting streak
+            saveHabitsToStorage(habits)
+        }
     }
+
     
     struct HabitInformation_Previews: PreviewProvider {
         static var previews: some View {
