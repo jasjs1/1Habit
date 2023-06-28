@@ -7,7 +7,7 @@
 import SwiftUI
 import Firebase
 
-struct CreateAccount: View {
+struct CreateAccountView: View {
     @State private var email: String = ""
     @State private var password: String = ""
 
@@ -56,8 +56,8 @@ struct CreateAccount: View {
     }
 }
 
-struct CreateAccount_Previews: PreviewProvider {
+struct CreateAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateAccount()
+        CreateAccountView()
     }
 }
