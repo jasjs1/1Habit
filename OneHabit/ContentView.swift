@@ -13,7 +13,7 @@ struct ContentView: View {
         let calendar = Calendar.current
         let currentComponents = calendar.dateComponents([.year, .month], from: Date())
         
-        guard let lastDayOfMonth = calendar.date(from: DateComponents(year: currentComponents.year, month: currentComponents.month?.advanced(by: 1)))?.addingTimeInterval(-1) else {
+        guard let lastDayOfMonth = calendar.date(from: DateComponents(year: currentComponents.year, month: currentComponents.month?.advanced(by: 1) ?? 1))?.addingTimeInterval(-1) else {
             return 0
         }
         
@@ -71,7 +71,40 @@ struct ContentView: View {
     }
     
     func logHabitCompletedForToday() {
-        // Code to handle logging habit completion for today
+        let currentDate = Date()
+        let userDefaults = UserDefaults.standard
+        
+        // Check if the streak has already been incremented today
+        if let lastIncrementDate = userDefaults.object(forKey: "LastStreakIncrementDate") as? Date {
+            if Calendar.current.isDateInToday(lastIncrementDate) {
+                // Streak already incremented today, show alert
+                // You can customize the alert message as per your requirement
+                showAlert(message: "You've already logged your Habit Streak for today. Please remember to come back tomorrow to continue tracking your progress.")
+                return
+            }
+        }
+        
+        // Increment the streak
+        if var streak = userDefaults.value(forKey: "Streak") as? Int {
+            streak += 1
+            userDefaults.set(streak, forKey: "Streak")
+        } else {
+            // No previous streak found, set initial streak to 1
+            userDefaults.set(1, forKey: "Streak")
+        }
+        
+        // Save the current date as the last streak increment date
+        userDefaults.set(currentDate, forKey: "LastStreakIncrementDate")
+        
+        // Show a success message or perform any other actions you want
+    }
+
+    func showAlert(message: String) {
+        // Show an alert with the provided message
+        // You can customize the alert appearance and actions as per your requirement
+        let alert = UIAlertController(title: "Habit Streak Notification", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -88,6 +121,12 @@ struct CalendarView: View {
                 ForEach(1...lastDayOfMonth(), id: \.self) { day in
                     Text("\(day)")
                         .frame(width: 30, height: 30)
+                        .background(day == calendar.component(.day, from: currentDate) ? Color.yellow : Color.clear)
+                        .cornerRadius(15)
+
+
+
+
                 }
             }
         }
