@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContactDeveloper: View {
+struct ContactDeveloperView: View {
     var body: some View {
         VStack {
             List {
@@ -27,8 +27,8 @@ struct ContactDeveloper: View {
     }
 }
 
-struct ContactDeveloper_Previews: PreviewProvider {
+struct ContactDeveloperView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactDeveloper()
+        ContactDeveloperView()
     }
 }
