@@ -32,18 +32,19 @@ struct SettingsView: View {
                     }
                     
                     
-                    
-                    Section(header: Text("Resources & support")) {
-                        NavigationLink(destination: CreateAccountView()) {
-                            Text("Create Account")
-                        }
-                        NavigationLink(destination: ContactDeveloperView()) {
-                            Text("Contact Developer")
-                        }
-                    }
                 }
                 .listStyle(GroupedListStyle())
                 .navigationTitle("Settings")
+            }
+            
+                Section(header: Text("Support & resources")) {
+                    NavigationLink(destination: CreateAccountView()) {
+                        Text("Create Account")
+                    }
+                    
+                    NavigationLink(destination: ContactDeveloperView()) {
+                        Text("Contact Developer")
+                    }
             }
         }
     }
