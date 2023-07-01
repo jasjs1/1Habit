@@ -1,0 +1,9 @@
+{
+    "Simulator Target Bundle": "com.jasjs.OneHabit",
+    "aps":{
+        "alert":"Test drop",
+        "sound":"default",
+        "badge":3
+    }
+}
+
