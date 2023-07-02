@@ -11,3 +11,10 @@ title: "[USER-FEEDBACK]: "
 labels:
   - user-feedback
 url: https://example.com/bug-report-template
+
+name: Feature Request
+about: Something on your mind that would be nice to have on 1Habit
+title: "[FEATURE-REQUEST]: "
+labels:
+  - feature-request
+url: https://example.com/bug-report-template
