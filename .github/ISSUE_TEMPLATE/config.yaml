@@ -4,3 +4,10 @@ title: "[BUG]: "
 labels:
   - bug
 url: https://example.com/bug-report-template
+
+name: Feedback
+about: Got anything that I could improve on or just tell me how much you love 1Habit
+title: "[USER-FEEDBACK]: "
+labels:
+  - user-feedback
+url: https://example.com/bug-report-template
