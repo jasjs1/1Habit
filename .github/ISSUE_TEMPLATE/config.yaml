@@ -20,4 +20,4 @@ about: Something on your mind that would be nice to have on 1Habit
 title: "[FEATURE-REQUEST]: "
 labels:
   - feature-request
-url: https://example.com/feature-request-template
+url: https://github.com/jasjs1/1Habit/blob/main/.github/ISSUE_TEMPLATE/FeatureRequest.md
