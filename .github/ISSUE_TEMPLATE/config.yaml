@@ -1,3 +1,4 @@
+---
 name: Bug Report
 about: Found a bug? Report it here!
 title: "[BUG]: "
@@ -5,16 +6,18 @@ labels:
   - bug
 url: https://example.com/bug-report-template
 
+---
 name: Feedback
 about: Got anything that I could improve on or just tell me how much you love 1Habit
 title: "[USER-FEEDBACK]: "
 labels:
   - user-feedback
-url: https://example.com/bug-report-template
+url: https://example.com/feedback-template
 
+---
 name: Feature Request
 about: Something on your mind that would be nice to have on 1Habit
 title: "[FEATURE-REQUEST]: "
 labels:
   - feature-request
-url: https://example.com/bug-report-template
+url: https://example.com/feature-request-template
