@@ -39,7 +39,7 @@ struct CreateHabit: View {
                 Text("Become a part of the 9%")
                     .padding()
                     .foregroundColor(.white)
-                    .background(Color.accentColor)
+                    .background(Color.yellow)
                     .font(.title3)
                     .bold()
                     .cornerRadius(10)
@@ -77,6 +77,10 @@ struct BottomSheetView: View {
             Toggle("Sunday", isOn: bindingForDay("Sun"))
             
             DatePicker("Reminder time:", selection: $newHabitReminderTime, in: ...Date())
+                .onChange(of: newHabitReminderTime) { newValue in
+                    // Save the selected date to storage (replace "selectedDateKey" with the desired key)
+                    UserDefaults.standard.set(newValue, forKey: "selectedDateKey")
+                }
         }
         .padding()
         .navigationBarTitle("New Habit")
@@ -98,11 +102,17 @@ struct BottomSheetView: View {
                         .cornerRadius(10)
                 }
             } else {
-                Text("You have 1 habit already created. You have to delete the habit to create another.")
-                    .padding(24)
-                    .foregroundColor(.red)
-                    .bold()
-                    .font(.title3)
+                Button(action: {
+                    isShowingBottomSheet = true
+                }) {
+                    Text("Become a part of the 9%")
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.yellow)
+                        .font(.title3)
+                        .bold()
+                        .cornerRadius(10)
+                }
                 
             }
             
