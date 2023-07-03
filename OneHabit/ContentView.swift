@@ -1,4 +1,6 @@
 import SwiftUI
+import UIKit
+import UserNotifications
 
 struct Habit: Identifiable, Codable {
     var id = UUID()
@@ -8,7 +10,44 @@ struct Habit: Identifiable, Codable {
 
 struct ContentView: View {
     @State private var habits: [Habit] = []
-    
+
+    var body: some View {
+        NavigationView {
+            GeometryReader { geometry in
+                VStack {
+                    CalendarView()
+                        .padding()
+                    
+                    ForEach(habits) { habit in
+                        Text(habit.name)
+                    }
+
+                    Text("Remaining days of the month: \(remainingDays) days")
+                        .font(.headline)
+                        .bold()
+                        .padding()
+
+                    Spacer()
+
+                    Button(action: logHabitCompletedForToday) {
+                        Text("Mark Day as Completed")
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.yellow)
+                            .font(.title3)
+                            .bold()
+                            .cornerRadius(10)
+                    }
+
+                    Spacer()
+                }
+            }
+            .onAppear {
+                retrieveHabitsFromStorage()
+            }
+        }
+    }
+
     var remainingDays: Int {
         let calendar = Calendar.current
         let currentComponents = calendar.dateComponents([.year, .month], from: Date())
@@ -20,40 +59,7 @@ struct ContentView: View {
         let remainingDays = calendar.dateComponents([.day], from: Date(), to: lastDayOfMonth)
         return remainingDays.day ?? 0
     }
-    
-    var body: some View {
-        NavigationView {
-            GeometryReader { geometry in
-                VStack {
-                    CalendarView()
-                        .padding()
-                    
-                    Text("Remaining days of the month: \(remainingDays) days")
-                        .font(.headline)
-                        .bold()
-                        .padding()
-                    
-                    Spacer()
-                    
-                    Button(action: logHabitCompletedForToday) {
-                        Text("Mark Day as Completed")
-                            .padding()
-                            .foregroundColor(.white)
-                            .background(Color.yellow)
-                            .font(.title3)
-                            .bold()
-                            .cornerRadius(10)
-                    }
-                    
-                    Spacer()
-                }
-            }
-            .onAppear {
-                retrieveHabitsFromStorage()
-            }
-        }
-    }
-    
+
     func retrieveHabitsFromStorage() {
         if let data = UserDefaults.standard.data(forKey: "SavedHabits") {
             let decoder = JSONDecoder()
@@ -61,19 +67,14 @@ struct ContentView: View {
                 habits = decodedHabits
             }
         }
+        
+        // Show the "No Habits" alert if the habits array is empty
     }
-    
-    func saveHabitsToStorage(_ habits: [Habit]) {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(habits) {
-            UserDefaults.standard.set(encoded, forKey: "SavedHabits")
-        }
-    }
-    
+
     func logHabitCompletedForToday() {
         let currentDate = Date()
         let userDefaults = UserDefaults.standard
-        
+
         // Check if the streak has already been incremented today
         if let lastIncrementDate = userDefaults.object(forKey: "LastStreakIncrementDate") as? Date {
             if Calendar.current.isDateInToday(lastIncrementDate) {
@@ -83,7 +84,8 @@ struct ContentView: View {
                 return
             }
         }
-        
+
+
         // Increment the streak
         if var streak = userDefaults.value(forKey: "Streak") as? Int {
             streak += 1
@@ -92,11 +94,12 @@ struct ContentView: View {
             // No previous streak found, set initial streak to 1
             userDefaults.set(1, forKey: "Streak")
         }
-        
+
         // Save the current date as the last streak increment date
         userDefaults.set(currentDate, forKey: "LastStreakIncrementDate")
-        
+
         // Show a success message or perform any other actions you want
+        showAlert(message: "Habit Streak logged successfully.")
     }
 
     func showAlert(message: String) {
@@ -108,30 +111,27 @@ struct ContentView: View {
     }
 }
 
+
 struct CalendarView: View {
     let calendar = Calendar.current
     let currentDate = Date()
-    
+
     var body: some View {
         VStack {
             Text(currentDate.monthAsString())
                 .font(.title)
-            
+
             LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 10) {
                 ForEach(1...lastDayOfMonth(), id: \.self) { day in
                     Text("\(day)")
                         .frame(width: 30, height: 30)
                         .background(day == calendar.component(.day, from: currentDate) ? Color.yellow : Color.clear)
                         .cornerRadius(15)
-
-
-
-
                 }
             }
         }
     }
-    
+
     func lastDayOfMonth() -> Int {
         let range = calendar.range(of: .day, in: .month, for: currentDate)!
         return range.count
@@ -143,11 +143,5 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
         return dateFormatter.string(from: self)
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
