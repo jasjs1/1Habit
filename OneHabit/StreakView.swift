@@ -15,13 +15,14 @@ struct StreakView: View {
             Text("\(streak)")
                 .font(.system(size: 275))
                 .foregroundColor(Color.yellow)
+                .font(.system(size: 14, design: .rounded))
             
             Text("Current Running Streak")
-                .font(.system(size: 14))
+                .font(.system(size: 14, design: .rounded))
                 .foregroundColor(.secondary)
                 .bold()
             Text("(by days)")
-                .font(.system(size: 14))
+                .font(.system(size: 14, design: .rounded))
                 .foregroundColor(.secondary)
                 .bold()
         }
@@ -42,3 +43,4 @@ struct StreakView_Previews: PreviewProvider {
         StreakView()
     }
 }
+    
